@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/david-mtz/transformacion-digital-v2.0#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "ibm-watson": "^4.2.1",
+    "nodemon": "^1.19.1",
+    "twit": "^2.2.11"
   }
 }
