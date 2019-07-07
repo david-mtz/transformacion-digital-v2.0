@@ -8,14 +8,24 @@ const twitterHelper = require('./helpers/twitterapp');
 const personalityHelper = require('./helpers/watsonapp');
 
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('./public'));
 
 app.get('/', (req, res) => { 
-    //res.sendFile(path.join(__dirname + views_dir + 'index.html'));
+    res.sendFile(path.join(__dirname + views_dir + 'index.html'));
 });
 
 app.get('/twitter', (req, res) => {
     twitterHelper.getTweets("OyeDavid_", function(datos){
+        personalityHelper.tweetsToProfile(datos, function(datos){
+            res.send(datos);
+        });
+    });
+});
+
+
+app.post('/twitter', (req, res) => {
+
+    twitterHelper.getTweets(request.body.twitter, function(datos){
         personalityHelper.tweetsToProfile(datos, function(datos){
             res.send(datos);
         });
