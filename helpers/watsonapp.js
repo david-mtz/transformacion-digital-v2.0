@@ -6,25 +6,24 @@ const personalityInsights = new PersonalityInsightsV3({
     url: 'https://gateway.watsonplatform.net/personality-insights/api'
 });
 
-const getPersonality = (listText) => {
+const getPersonality = (listText, success) => {
+    // console.log(JSON.stringify(listText));
     const profileParams = {
-        // Get the content from the JSON file.
-        content_items: listText,
         content_type: 'text/plain',
+        content: JSON.stringify(listText),
         consumption_preferences: true,
         raw_scores: true,
-        content_language: 'es'
-      };
+    };
       
     personalityInsights.profile(profileParams)
       
-          .then(profile => {
-          return profile;
-        })
-        .catch(err => {
-          return {};
-        });
-    }
+    .then(profile => {
+        success(profile);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
 
 const parseTweetToContent = (tweet) => {
     return {
@@ -35,10 +34,16 @@ const parseTweetToContent = (tweet) => {
     }
 }
 
-const tweetsToProfile = (listTweets) => {
-    return getPersonality(listTweets.map(parseTweetToContent));
+const tweetsToProfile = (listTweets, success) => {
+    parseTweets = [];
+
+    Object.keys(listTweets).map(function(key, index) {
+        parseTweets.push(parseTweetToContent(listTweets[key]));
+    });
+
+    return getPersonality(parseTweets, success);
 };
-  
+ 
 
 module.exports = {
     tweetsToProfile

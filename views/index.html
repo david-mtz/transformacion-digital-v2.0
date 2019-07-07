@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Bootstrap Example</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+      <link href="./css/style.css" rel="stylesheet" id="bootstrap-css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+      <script src="./charts.js"></script>
+    </script>
+   </head>
+   <body>
+      <section class="login-block">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6 login-sec">
+                  <h2 class="text-center">¡Solicitud de crédito!</h2>
+                  <form class="login-form pagination-container" method="POST">
+                    <div class="page-div" data-page="2">
+                        <div class="form-group">
+                            <label class="text-uppercase">Usuario de Twitter</label>
+                            <input type="text" class="form-control" placeholder="" name="twitter" pattern="^[a-zA-Z0-9_]{1,15}$" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">Usuario de Instagram</label>
+                            <input type="text" class="form-control" placeholder="" name="instagram" pattern="^[a-zA-Z0-9._]+$" required>
+                        </div>
+                    </div>
+                    <div class="page-div" data-page="2">
+                        <div class="form-group">
+                            <label class="text-uppercase">¿Con qué finalidad solicitas un crédito?</label>
+                            <textarea class="form-control" name="razoncredito" minlength="60" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">¿En caso de no poder pagar esté crédito que harías?</label>
+                            <textarea class="form-control" name="nopagar" minlength="60" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">Considerando lo anterior, ¿Qué consideras que una persona debe hacer o tener para solicitar un crédito?</label>
+                            <textarea class="form-control" name="requisitoscredito" minlength="60" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">¿Qué estrategias utilizas para llevar un control de tus gastos y deudas?</label>
+                            <textarea class="form-control" name="estrategias" minlength="60" required></textarea>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                            <label class="form-check-label" for="termycond">El solicitante acepta los terminos y condiciones</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-login float-right">Enviar</button>
+               </div>
+               <div class="col-md-6 estadisticas">
+                    <h2 class="text-center">¡Estadísticas!</h2>
+                    <canvas id="charttwitter" class="w-100" style="height: 350px;"></canvas>
+                    <canvas id="charttexto" class="w-100" style="height: 350px;"></canvas>
+               </div>
+               </form>
+            </div>
+            </div>
+            </section>
+            
+    <script>
+    $(document).ready(function() {
+        $('.login-form').submit(function() {
+            $.ajax({
+                url: 'http://localhost:3000/form',
+                method: 'POST',
+                data: $('.login-form').serialize(),
+                dataType: "json",
+                success: function(data){
+                    // Actualizar las graficasxs
+                }
+            })
+        });
+        /*$pagination_container = $('.pagination-container');
+        $.each( $(this).find('.page-div'), function(){
+
+        });*/
+    });
+    </script>
+   </body>
+</html>

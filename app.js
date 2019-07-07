@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/twitter', (req, res) => {
+    twitterHelper.getTweets("OyeDavid_", function(datos){
+        personalityHelper.tweetsToProfile(datos, function(datos){
+            res.send(datos);
+        });
+    });
 });
 
 

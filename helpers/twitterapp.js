@@ -1,24 +1,22 @@
-var Twit = require('twit')
+var Twitter = require('twitter');
+ 
+var client = new Twitter({
+    consumer_key:         'UKW4rkepE6iv2hq7A4nNZJmaw',
+    consumer_secret:      'j1iS62f8UeLVoapcYKef2LGlJY1zqoRmd8kny1tMxRGWhBV5lU',
+    access_token_key:     '158606989-bScuD0ezQiVbPFVLUAmctSnEdWvWMenW4G936Luj',
+    access_token_secret:  'pTnnRSvmTj8fOV22CybCo3XVwrRnP9UMwwQBXomhwN8tl',
+  });
+
 const MAX_COUNT = 200;
 
-var client = new Twit({
-  consumer_key:         'nQFytokbwR8p9BoTkKbR0vC6Q',
-  consumer_secret:      '2lm9RoybgRfHE6kKbrQ6hjW5QuuYtov2dygwIUgS6TdzlPKfpj',
-  access_token:         '949309590080016384-fzM3E1w3fjpW7o06ZwERCe2Pdx9QpAz',
-  access_token_secret:  'OLreHtGSxVsD5nP1Lxf6Uq8yQHEyMgLlaqJmYr4SyX3gI',
-  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-  strictSSL:            true,     // optional - requires SSL certificates to be valid.
-});
 
-
-const getTweets = (user) => {
+const getTweets = (user, success) => {
     var tweets = [];
-    client.get('statuses/user_timeline', { screen_name: user, include_rts: false, exclude_replies: true, count: MAX_COUNT },  function (err, data, response) {
-        if (!err) {
-            console.log(data);
-            tweets = data;
-        }
-        return tweets;
+    client.get('statuses/user_timeline', { screen_name: user, include_rts: false, exclude_replies: true, count: MAX_COUNT })
+    .catch(function (err) {
+        console.log('caught error', err)
+    }).then(function (result) {
+        success(result);
     });
 };
 
